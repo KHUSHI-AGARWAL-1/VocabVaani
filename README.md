@@ -1,1 +1,1 @@
-# VocabVaani-An online E-Learning App
+# VocabVaani-An online Dictionary App

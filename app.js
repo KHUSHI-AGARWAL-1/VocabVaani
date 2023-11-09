@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
+require('../VocabVaani/routes/authRoute')(app);
+require('../VocabVaani/routes/userRoute')(app);
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -63,4 +64,7 @@ db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
     } catch (err) {
       console.error("Error when estimating document count or adding roles", err);
     }
+
+    // routes
+
   }

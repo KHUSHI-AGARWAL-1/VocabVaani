@@ -6,109 +6,173 @@ const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
-exports.signup = (req, res) => {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
-  });
+// exports.signup = (req, res) => {
+//   const user = new User({
+//     username: req.body.username,
+//     email: req.body.email,
+//     password: bcrypt.hashSync(req.body.password, 8),
+//   });
 
-  user.save((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
+//   user.save(
+//     (err, user) => {
+//     if (err) {
+//       res.status(500).send({ message: err });
+//       return;
+//     }
 
+//     if (req.body.roles) {
+//       Role.find(
+//         {
+//           name: { $in: req.body.roles },
+//         },
+//         (err, roles) => {
+//           if (err) {
+//             res.status(500).send({ message: err });
+//             return;
+//           }
+
+//           user.roles = roles.map((role) => role._id);
+//           user.save((err) => {
+//             if (err) {
+//               res.status(500).send({ message: err });
+//               return;
+//             }
+
+//             res.send({ message: "User was registered successfully!" });
+//           });
+//         }
+//       );
+//     } else {
+//       Role.findOne({ name: "user" }, (err, role) => {
+//         if (err) {
+//           res.status(500).send({ message: err });
+//           return;
+//         }
+
+//         user.roles = [role._id];
+//         user.save((err) => {
+//           if (err) {
+//             res.status(500).send({ message: err });
+//             return;
+//           }
+
+//           res.send({ message: "User was registered successfully!" });
+//         });
+//       });
+//     }
+//   });
+// };
+exports.signup = async (req, res) => {
+  try {
+   
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+    });
+    await user.save();
+    let roles;
     if (req.body.roles) {
-      Role.find(
-        {
-          name: { $in: req.body.roles },
-        },
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-
-          user.roles = roles.map((role) => role._id);
-          user.save((err) => {
-            if (err) {
-              res.status(500).send({ message: err });
-              return;
-            }
-
-            res.send({ message: "User was registered successfully!" });
-          });
-        }
-      );
-    } else {
-      Role.findOne({ name: "user" }, (err, role) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        user.roles = [role._id];
-        user.save((err) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-
-          res.send({ message: "User was registered successfully!" });
-        });
+      roles = await Role.find({
+        name: { $in: req.body.roles },
       });
+    } else {
+      // Default role if not specified
+      roles = await Role.findOne({ name: "user" });
     }
-  });
+
+    // Assign roles to the user
+    user.roles = roles.map((role) => role._id);
+
+    // Save the user with roles assigned
+    await user.save();
+res.render('signup')
+// return;
+    // res.status(200).json({ message: "User was registered successfully!" });
+  } catch (error) {
+console.log(error)
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-exports.signin = (req, res) => {
-  User.findOne({
-    username: req.body.username,
-  })
-    .populate("roles", "-__v")
-    .exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err });
-        return;
-      }
 
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
+// exports.signin = async (req, res) => {
+//   try {
+//     const user = await User.findOne({
+//       username: req.body.username,
+//     }).populate("roles", "-__v");
 
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
+//     if (!user) {
+//       return res.status(404).json({ message: "User Not found." });
+//     }
 
-      if (!passwordIsValid) {
-        return res.status(401).send({ message: "Invalid Password!" });
-      }
+//     const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
-      const token = jwt.sign({ id: user.id },
-                              config.secret,
-                              {
-                                algorithm: 'HS256',
-                                allowInsecureKeySizes: true,
-                                expiresIn: 86400, // 24 hours
-                              });
+//     if (!passwordIsValid) {
+//       return res.status(401).json({ message: "Invalid Password!" });
+//     }
 
-      var authorities = [];
+//     const token = jwt.sign({ id: user.id }, config.secret, {
+//       algorithm: 'HS256',
+//       allowInsecureKeySizes: true,
+//       expiresIn: 86400, // 24 hours
+//     });
 
-      for (let i = 0; i < user.roles.length; i++) {
-        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
-      }
+//     const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
 
-      req.session.token = token;
+//     req.session.token = token;
 
-      res.status(200).send({
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        roles: authorities,
-      });
-    });
+//     res.status(200).json({
+//       id: user._id,
+//       username: user.username,
+//       email: user.email,
+//       roles: authorities,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+exports.signin = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      username: req.body.username,
+    }).populate("roles", "-__v");
+
+    console.log("User object:", user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User Not found." });
+    }
+
+    const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+
+    if (!passwordIsValid) {
+      return res.status(401).json({ message: "Invalid Password!" });
+    }
+    const token = jwt.sign({ id: user.id }, config.secret, {
+            algorithm: 'HS256',
+            allowInsecureKeySizes: true,
+            expiresIn: 86400, // 24 hours
+          });
+      
+          const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
+          res.cookie('token', token, { httpOnly: true });
+          req.session.token = token;
+      
+          res.render('signin', {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            roles: authorities,
+          });
+          return;
+  }
+   catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 exports.signout = async (req, res) => {

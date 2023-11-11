@@ -4,55 +4,52 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 
-verifyToken = (req, res, next) => {
-  let token = req.session.token;
+const util = require("util");
+// const jwt = require("jsonwebtoken");
+const verifyAsync = util.promisify(jwt.verify);
 
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
-  }
+const verifyToken = async (req, res, next) => {
+  try {
+    const token = req.session.token;
 
-  jwt.verify(token,
-            config.secret,
-            (err, decoded) => {
-              if (err) {
-                return res.status(401).send({
-                  message: "Unauthorized!",
-                });
-              }
-              req.userId = decoded.id;
-              next();
-            });
-};
-
-isAdmin = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
+    if (!token) {
+      return res.status(403).send({ message: "No token provided!" });
     }
 
-    Role.find(
-      {
-        _id: { $in: user.roles },
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
+    // Verify the token asynchronously using Promises
+    const decoded = await verifyAsync(token, config.secret);
 
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
-            next();
-            return;
-          }
-        }
+    req.userId = decoded.id;
+    next();
+  } catch (error) {
+    return res.status(401).send({ message: "Unauthorized!" });
+  }
+};
 
-        res.status(403).send({ message: "Require Admin Role!" });
-        return;
-      }
-    );
-  });
+module.exports = verifyToken;
+
+
+const isAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId).exec();
+
+    if (!user) {
+      return res.status(404).json({ message: "User Not found." });
+    }
+
+    const roles = await Role.find({ _id: { $in: user.roles } }).exec();
+
+    const isAdmin = roles.some(role => role.name === "admin");
+
+    if (isAdmin) {
+      next();
+    } else {
+      res.status(403).json({ message: "Require Admin Role!" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 isModerator = (req, res, next) => {

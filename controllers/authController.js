@@ -64,7 +64,11 @@ var bcrypt = require("bcrypt");
 // };
 exports.signup = async (req, res) => {
   try {
-   
+    const password = req.body.password;
+
+    if (password.length !== 8) {
+      return res.status(400).json({ error: "Password must be exactly 8 characters long." });
+    }
     const user = new User({
       username: req.body.username,
       email: req.body.email,
@@ -76,9 +80,11 @@ exports.signup = async (req, res) => {
       roles = await Role.find({
         name: { $in: req.body.roles },
       });
-    } else {
+    } 
+    else {
       // Default role if not specified
-      roles = await Role.findOne({ name: "user" });
+      const defaultRole = await Role.findOne({ name: "user" });
+      roles = [defaultRole];
     }
 
     // Assign roles to the user
@@ -86,7 +92,7 @@ exports.signup = async (req, res) => {
 
     // Save the user with roles assigned
     await user.save();
-res.render('signup')
+res.redirect('/main')
 // return;
     // res.status(200).json({ message: "User was registered successfully!" });
   } catch (error) {
@@ -159,15 +165,18 @@ exports.signin = async (req, res) => {
       
           const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
           res.cookie('token', token, { httpOnly: true });
+           // Store user information in the session
+    req.session.user = {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      roles: authorities,
+    };
           req.session.token = token;
       
-          res.render('signin', {
-            id: user._id,
-            username: user.username,
-            email: user.email,
-            roles: authorities,
-          });
-          return;
+         // In the signup route handler
+         res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities.join(',')}`);
+         return;
   }
    catch (error) {
     console.error(error);

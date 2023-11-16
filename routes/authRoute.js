@@ -9,6 +9,13 @@ module.exports = function(app) {
     );
     next();
   });
+  app.get("/api/auth/signin", (req, res) => {
+    // Render a signin form
+    res.render('main');
+  });
+  app.get("/api/auth/signout", (req, res) => {
+    res.redirect('/');
+  });
 
   app.post(
     "/api/auth/signup",

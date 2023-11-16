@@ -1,0 +1,24 @@
+<form action="/api/auth/signin" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    
+    <!-- Other form fields for roles, if applicable -->
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Default checkbox
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+      <label class="form-check-label" for="flexCheckChecked">
+        Checked checkbox
+      </label>
+    </div>
+
+    <button type="submit" value="submit">Sign in</button>
+  </form>

@@ -1,0 +1,22 @@
+<!-- history.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ... (your head content) ... -->
+</head>
+<body>
+  <h1>Search History for <%= username %></h1>
+
+  <h1>User History for <%= username %></h1>
+
+<% if (searchHistory && searchHistory.length > 0) { %>
+  <ul>
+    <% searchHistory.forEach(entry => { %>
+      <li><%= entry.word %> - <%= entry.timestamp %></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No search history available.</p>
+  <a href="/main/user">Back to Main Page</a>
+</body>
+</html>

@@ -142,6 +142,8 @@ console.log(error)
 
 exports.signin = async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
+    
     const user = await User.findOne({
       username: req.body.username,
     }).populate("roles", "-__v");

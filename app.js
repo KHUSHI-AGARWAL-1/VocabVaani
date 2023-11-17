@@ -6,10 +6,11 @@ const dbConfig=require('./config/db.config')
 const app = express();
 const path=require('path')
 const db = require("./models");
+const authroute = require("./routes/authRoute");
 const Role = db.role;
-const axios = require('axios')
-require('../VocabVaani/routes/authRoute')(app);
-require('../VocabVaani/routes/userRoute')(app);
+// const axios = require('axios')
+// require('../VocabVaani/routes/authRoute')(app);
+// require('../VocabVaani/routes/userRoute')(app);
   
 let corsOptions = {
   origin: "http://localhost:8081"
@@ -27,6 +28,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+app.use(authroute)
 
 
 db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)

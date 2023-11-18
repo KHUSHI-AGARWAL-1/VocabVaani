@@ -1,0 +1,44 @@
+<h1>main page</h1>
+<a href="api/auth/signout">signout</a>
+
+<a href="/delete">Delete account</a>
+
+
+<!-- <form id="wordForm" action="/search" method="post">
+  <label for="word">Search Word:</label>
+  <input type="text" name="word" id="word" placeholder="Enter a Word" required> -->
+      <!-- Add a language dropdown -->
+      <!-- <label for="language">Select Language:</label>
+      <select name="language" id="language">
+        <option value="en">English</option>
+        <option value="es">Spanish</option> -->
+        <!-- Add more language options as needed -->
+      <!-- </select>
+  <button type="submit">Search</button>
+</form> -->
+<a href="/user/history">View Search History</a>
+
+<h1>
+  word:<%= word%>
+ </h1> 
+<p>Definition: <%= dictionaryResult.definition%></p>
+
+
+<h2>Synonyms</h2>
+<ul>
+  <% thesaurusResult.antonyms.slice(0, 6).forEach((antonym) => { %>
+    <li><%= antonym %></li>
+  <% }); %>
+</ul>
+<h2>Antonyms</h2>
+<ul>
+  <% thesaurusResult.synonyms.slice(0, 6).forEach((antonym) => { %>
+    <li><%= antonym %></li>
+  <% }); %>
+</ul>
+<h2>Rhyming Words</h2>
+<ul>
+  <% rhymeResult.synonyms.slice(0, 6).forEach((rhyme) => { %>
+    <li><%= rhyme %></li>
+  <% }); %>
+</ul>

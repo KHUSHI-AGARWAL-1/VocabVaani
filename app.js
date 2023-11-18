@@ -89,101 +89,18 @@ app.listen(PORT, () => {
  }
  
 
- 
- 
- 
- 
-//  //kar diya kaam panda💪💪💪💪
-//  let word = 'happy'; app.get('/search',(req,res)=>{
-
-//  })
-// let apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
-//  let dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
-//  let thesaurusUrl = 'https://api.api-ninjas.com/v1/thesaurus?word=' + word;
-//  let rhymeUrl = 'https://api.api-ninjas.com/v1/rhyme?word=' + word;
-//  fetch(dictionaryUrl, {
-//      method: 'GET',
-//      headers: {
-//          'X-Api-Key': apiKey,
-//          'Content-Type': 'application/json',
-//      },
-//  })
-//      .then(response => {
- 
-//          if (!response.ok) {
-//              throw new Error('Network response was not ok: ' + response.statusText);
-//          }
- 
-//          return response.json();
-//      })
-//      .then(result => {
- 
-//          console.log(result);
-//      })
-//      .catch(error => {
- 
-//          console.error('Error:', error);
-//      });
-//  fetch(thesaurusUrl, {
-//      method: 'GET',
-//      headers: {
-//          'X-Api-Key': apiKey,
-//          'Content-Type': 'application/json',
-//      },
-//  })
-//      .then(response => {
- 
-//          if (!response.ok) {
-//              throw new Error('Network response was not ok: ' + response.statusText);
-//          }
- 
-//          return response.json();
-//      })
-//      .then(result => {
- 
-//          console.log(result);
-//      })
-//      .catch(error => {
- 
-//          console.error('Error:', error);
-//      });
-//  fetch(rhymeUrl, {
-//      method: 'GET',
-//      headers: {
-//          'X-Api-Key': apiKey,
-//          'Content-Type': 'application/json',
-//      },
-//  })
-//      .then(response => {
- 
-//          if (!response.ok) {
-//              throw new Error('Network response was not ok: ' + response.statusText);
-//          }
- 
-//          return response.json();
-//      })
-//      .then(result => {
- 
-//          console.log("Rhyme:"+result);
-//      })
-//      .catch(error => {
- 
-//          console.error('Error:', error);
-//      });
 
 
 
 app.post('/search', async (req, res) => {
   const word = req.body.word;
-  // const username = req.query.username;
-  // const userId = req.session.userId;
+  console.log('Req Query:', req.query);
   console.log('Word:', word); 
+
   const apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
   const dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
   const thesaurusUrl = 'https://api.api-ninjas.com/v1/thesaurus?word=' + word;
   const rhymeUrl = 'https://api.api-ninjas.com/v1/rhyme?word=' + word;
-  const profanityUrl = 'https://api.api-ninjas.com/v1/profanityfilter?text=' + word;
-
   try {
     const dictionaryResponse = await fetch(dictionaryUrl, {
       method: 'GET',
@@ -198,10 +115,35 @@ app.post('/search', async (req, res) => {
     }
 
     const dictionaryResult = await dictionaryResponse.json();
+    const thesaurusResponse = await fetch(thesaurusUrl, {
+      method: 'GET',
+      headers: {
+        'X-Api-Key': apiKey,
+        'Content-Type': 'application/json',
+      },
+    });
 
+    if (!thesaurusResponse.ok) {
+      throw new Error('Network response was not ok: ' + thesaurusResponse.statusText);
+    }
+
+    const thesaurusResult = await thesaurusResponse.json();
     // Similarly, make requests to other APIs (thesaurus, rhyme, profanity) here
+    const rhymeResponse = await fetch(rhymeUrl, {
+      method: 'GET',
+      headers: {
+        'X-Api-Key': apiKey,
+        'Content-Type': 'application/json',
+      },
+    });
 
-    res.render('main', { word, dictionaryResult});
+    if (!rhymeResponse.ok) {
+      throw new Error('Network response was not ok: ' + rhymeResponse.statusText);
+    }
+
+    const rhymeResult = await rhymeResponse.json();
+
+    res.render('main2', { word, dictionaryResult,thesaurusResult,rhymeResult});
   } catch (error) {
     console.error('Error:', error);
     res.render('main', { error: 'An error occurred' });

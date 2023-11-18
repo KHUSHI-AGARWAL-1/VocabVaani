@@ -3,14 +3,14 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const dbConfig=require('./config/db.config')
+const User = require("./models/userModel");
+const userRole = require("./models/roleModel");
 const app = express();
 const path=require('path')
 const db = require("./models");
 const authroute = require("./routes/authRoute");
+const userroute = require("./routes/userRoute");
 const Role = db.role;
-// const axios = require('axios')
-// require('../VocabVaani/routes/authRoute')(app);
-// require('../VocabVaani/routes/userRoute')(app);
   
 let corsOptions = {
   origin: "http://localhost:8081"
@@ -29,6 +29,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 app.use(authroute)
+app.use(userroute)
 
 
 db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)
@@ -53,9 +54,11 @@ app.get("/signin", (req, res) => {
 });
 app.get('/main', (req, res) => {
   const username = req.query.username;
-  res.render('main', { username });
+  const userId = req.session.userId;
+  res.render('main', { username,userId });
 });
-app.get("/delete", (req, res) => {
+
+app.get("/delete/", (req, res) => {
   res.render('confirmDelete')
 });
 
@@ -85,3 +88,122 @@ app.listen(PORT, () => {
     }
  }
  
+
+ 
+ 
+ 
+ 
+//  //kar diya kaam panda💪💪💪💪
+//  let word = 'happy'; app.get('/search',(req,res)=>{
+
+//  })
+// let apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
+//  let dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
+//  let thesaurusUrl = 'https://api.api-ninjas.com/v1/thesaurus?word=' + word;
+//  let rhymeUrl = 'https://api.api-ninjas.com/v1/rhyme?word=' + word;
+//  fetch(dictionaryUrl, {
+//      method: 'GET',
+//      headers: {
+//          'X-Api-Key': apiKey,
+//          'Content-Type': 'application/json',
+//      },
+//  })
+//      .then(response => {
+ 
+//          if (!response.ok) {
+//              throw new Error('Network response was not ok: ' + response.statusText);
+//          }
+ 
+//          return response.json();
+//      })
+//      .then(result => {
+ 
+//          console.log(result);
+//      })
+//      .catch(error => {
+ 
+//          console.error('Error:', error);
+//      });
+//  fetch(thesaurusUrl, {
+//      method: 'GET',
+//      headers: {
+//          'X-Api-Key': apiKey,
+//          'Content-Type': 'application/json',
+//      },
+//  })
+//      .then(response => {
+ 
+//          if (!response.ok) {
+//              throw new Error('Network response was not ok: ' + response.statusText);
+//          }
+ 
+//          return response.json();
+//      })
+//      .then(result => {
+ 
+//          console.log(result);
+//      })
+//      .catch(error => {
+ 
+//          console.error('Error:', error);
+//      });
+//  fetch(rhymeUrl, {
+//      method: 'GET',
+//      headers: {
+//          'X-Api-Key': apiKey,
+//          'Content-Type': 'application/json',
+//      },
+//  })
+//      .then(response => {
+ 
+//          if (!response.ok) {
+//              throw new Error('Network response was not ok: ' + response.statusText);
+//          }
+ 
+//          return response.json();
+//      })
+//      .then(result => {
+ 
+//          console.log("Rhyme:"+result);
+//      })
+//      .catch(error => {
+ 
+//          console.error('Error:', error);
+//      });
+
+
+
+app.post('/search', async (req, res) => {
+  const word = req.body.word;
+  // const username = req.query.username;
+  // const userId = req.session.userId;
+  console.log('Word:', word); 
+  const apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
+  const dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
+  const thesaurusUrl = 'https://api.api-ninjas.com/v1/thesaurus?word=' + word;
+  const rhymeUrl = 'https://api.api-ninjas.com/v1/rhyme?word=' + word;
+  const profanityUrl = 'https://api.api-ninjas.com/v1/profanityfilter?text=' + word;
+
+  try {
+    const dictionaryResponse = await fetch(dictionaryUrl, {
+      method: 'GET',
+      headers: {
+        'X-Api-Key': apiKey,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!dictionaryResponse.ok) {
+      throw new Error('Network response was not ok: ' + dictionaryResponse.statusText);
+    }
+
+    const dictionaryResult = await dictionaryResponse.json();
+
+    // Similarly, make requests to other APIs (thesaurus, rhyme, profanity) here
+
+    res.render('main', { word, dictionaryResult});
+  } catch (error) {
+    console.error('Error:', error);
+    res.render('main', { error: 'An error occurred' });
+  }
+});

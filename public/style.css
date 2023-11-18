@@ -1,0 +1,91 @@
+
+body {
+    background: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAsJCQcJCQcJCQkJCwkJCQkJCQsJCwsMCwsLDA0QDBEODQ4MEhkSJRodJR0ZHxwpKRYlNzU2GioyPi0pMBk7IRP/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wAARCADqAYMDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBv/EABsQAQEAAwEBAQAAAAAAAAAAAAARASGBUZFh/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAECBQb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8A6K5LlBwHu1uS5EEW59Ln1FAufS59EBbkuUAW5LlAFufS59RQLkuUUC5LkQFuS5QBbkuUAW5LlAFuS59QBbn0ufUAW59Ln1AFufS5QBq5S5EBbkuUAW5LlAFuS5QBbkuUAW59Ln1FAuS5QBbkufUAW59EAUQaVQQFEUBFQFEAFQBQAAAEVAUQBUAFAAEAVABRABUUAAARQRUAUAEVFAAABAUEAAApUFVaVARaVAFqUAWlQAq1AFpUAWlQBalAFpUAWpQBaVAFpUAWpQBaVACrUAWlEBaVACrUAWlQAq1AFpUAWlQBaVACgAALFACIAEAQIKAQACAAQAQgoBAAIABAAIABAAIABAAIKgEAAgCBBQQgogQUQIKAQACAIEABVVAAVAFQAAAAAAAFQBUAAAAAAAAAAAAAAAFRUAAAAAVAAAFEAAAAAAAQUbiiKEEUCAioQBQggKQQUIIoEBFQgChBBUIAoQQUIIKhAFCCApARQggoQQFIIKEEBSCKBBBQggoQQBIKM0uWhoAAQoKhgyArO/0qiqzSoNIGVBWfq/QVEpcoNDNKDSJVwACfVFE+qAH0yAJ9PoKCkBD6n0FE2uABUz1AE+qoCKAqY6Z6AJ9PoKJ9UAT6AAKAAAAoAAAAAIAAAAAAAAAAAAACgAAAAAgAKACAAoAIAAACgAAAAAAg0KCAoigAgKIAogCgAAAAgKIAogCgACAKIAogCgAAACKAIAoAAigAAAgKCAAAANQVChAVKEFRUIAFIABAAICiEFQCAAQACAAQACAAQACABSCoqUgAZIAUIAqUgAUgKhkgAEACkAAgbNoNRVNoEBUAXZtAFQAXZtAF2bQBdiALs2gQXYgQXZtAgptAguzaALs2gCm0AXYgC7BCCiAC7QILsQIG1QIKIEF2IEF2gEDYAAdVoQU6CKnTqQVDp0gC9TpADp0gB06QFTp0gB06QA6qiCp0AXoCB1UggdOkAOnSAHTpBUXp7tRA6dSAHTqgHToAdOgB06AHToAdOgB0SCKg0sX6IAAIQACKgKQAQgAEAAAAgqCkX6gBFPqACoBFQAAEIABA2qKQAQgAENgKQAQAAgAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAAAAAAAAAANDSojQDKqAiNAMjQDI0AyNAMqoCI0AyNAMjQDI0AyNAMjQDI0AyNAIjQDI0AyNAMjQDI0AyqgMjQDI0AyNAP/2Q==") center no-repeat ;
+    background-size: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Adjust the width of the container as needed */
+    height: 100vh;
+}
+
+.signup-container {
+    height: 600px;
+    width: 48%;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    
+}
+.img {
+    margin-top: 17vw;
+    width: 48%;/* Adjust the width of the image container as needed */
+    color: #fff;
+    padding: 20px; /* Set text color to white */
+    
+}
+
+.main {
+    font-size: 48px; /* Adjust the font size as needed */
+    font-weight: bold;
+    text-align: left;
+}
+
+
+.heading {
+    color: #42093a;
+    /* background-image: linear-gradient(to right, #007bff, #6c757d, #007bff); */
+    background-clip: text;
+    text-align: center;
+    /* color: transparent; */
+    font-size: 2.5rem;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border-radius: 5px;
+    
+}
+
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+.custom-checkbox {
+    margin-top: 20px;
+}
+
+.signup-btn {
+    width: 100%;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+.custom-btn {
+    background-color: rgb(231, 77, 115); /* Replace with your desired color code */
+    color: #fff; 
+}
+
+.signup-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}

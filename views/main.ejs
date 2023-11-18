@@ -3,11 +3,10 @@
 
 <a href="/delete">Delete account</a>
 
-<h1>Welcome, <%= username %>!</h1>
-<form action="/search" method="post">
-  <label for="searchWord">Search Word:</label>
-  <input type="text" name="searchWord" id="searchWord" required>
-  <input type="hidden" name="username" value="<%= username %>">
+
+<form id="wordForm" action="/search" method="post">
+  <label for="word">Search Word:</label>
+  <input type="text" name="word" id="word" placeholder="Enter a Word" required>
       <!-- Add a language dropdown -->
       <label for="language">Select Language:</label>
       <select name="language" id="language">
@@ -18,3 +17,6 @@
   <button type="submit">Search</button>
 </form>
 <a href="/user/history">View Search History</a>
+<h1>
+  word:<%= word%>
+</h1>

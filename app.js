@@ -97,6 +97,19 @@ app.post('/search', async (req, res) => {
   console.log('Req Query:', req.query);
   console.log('Word:', word); 
 
+  const searchHistory = req.session.searchHistory || [];
+  
+  // Add the current search word to the history
+  searchHistory.push(word);
+
+  // Keep only the last 5 searches
+  if (searchHistory.length > 5) {
+    searchHistory.shift(); // Remove the oldest entry
+  }
+
+  // Update the session with the new search history
+  req.session.searchHistory = searchHistory;
+
   const apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
   const dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
   const thesaurusUrl = 'https://api.api-ninjas.com/v1/thesaurus?word=' + word;
@@ -143,9 +156,16 @@ app.post('/search', async (req, res) => {
 
     const rhymeResult = await rhymeResponse.json();
 
-    res.render('main2', { word, dictionaryResult,thesaurusResult,rhymeResult});
+    res.render('main2', { word, dictionaryResult,thesaurusResult,rhymeResult,searchHistory});
   } catch (error) {
     console.error('Error:', error);
     res.render('main', { error: 'An error occurred' });
   }
+});
+
+app.get('/user/history', (req, res) => {
+  // Retrieve the search history from the session
+  const searchHistory = req.session.searchHistory || [];
+
+  res.render('searchHistory', { searchHistory });
 });

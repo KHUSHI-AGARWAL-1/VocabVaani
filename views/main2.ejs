@@ -24,21 +24,23 @@
 <p>Definition: <%= dictionaryResult.definition%></p>
 
 
-<h2>Synonyms</h2>
+<h2>Antonyms</h2>
 <ul>
   <% thesaurusResult.antonyms.slice(0, 6).forEach((antonym) => { %>
     <li><%= antonym %></li>
   <% }); %>
 </ul>
-<h2>Antonyms</h2>
+<h2> Synonyms </h2>
 <ul>
   <% thesaurusResult.synonyms.slice(0, 6).forEach((antonym) => { %>
     <li><%= antonym %></li>
   <% }); %>
 </ul>
 <h2>Rhyming Words</h2>
+<!-- Display the rhyming words -->
+<h2>Rhyming Words</h2>
 <ul>
-  <% rhymeResult.synonyms.slice(0, 6).forEach((rhyme) => { %>
+  <% rhymeResult.slice(0,5).forEach((rhyme) => { %>
     <li><%= rhyme %></li>
   <% }); %>
 </ul>

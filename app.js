@@ -128,6 +128,15 @@ app.post('/search', async (req, res) => {
     }
 
     const dictionaryResult = await dictionaryResponse.json();
+    const { definition } = dictionaryResult;
+    //console.log(definition.split(";"));
+    let truedefinition = definition.split(";");
+    truedefinition.shift()
+
+    if (truedefinition.length > 2) {
+      truedefinition = truedefinition.slice(0, 2);
+    }
+    console.log(truedefinition);
     const thesaurusResponse = await fetch(thesaurusUrl, {
       method: 'GET',
       headers: {
@@ -156,7 +165,7 @@ app.post('/search', async (req, res) => {
 
     const rhymeResult = await rhymeResponse.json();
 
-    res.render('main2', { word, dictionaryResult,thesaurusResult,rhymeResult,searchHistory});
+    res.render('main2', { word, dictionaryResult,truedefinition,thesaurusResult,rhymeResult,searchHistory});
   } catch (error) {
     console.error('Error:', error);
     res.render('main', { error: 'An error occurred' });

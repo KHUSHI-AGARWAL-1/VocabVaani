@@ -7,7 +7,13 @@
 <h1>
   word:<%= word%>
  </h1> 
-<p>Definition: <%= dictionaryResult.definition%></p>
+ <p>Definition:</p>
+ <ul>
+   <%for(let item of truedefinition){%>
+   <li><%=item%></li>
+ 
+   <%}%>
+ </ul>
 
 
 <h2>Antonyms</h2>
@@ -22,8 +28,7 @@
     <li><%= antonym %></li>
   <% }); %>
 </ul>
-<h2>Rhyming Words</h2>
-<!-- Display the rhyming words -->
+
 <h2>Rhyming Words</h2>
 <ul>
   <% rhymeResult.slice(0,6).forEach((rhyme) => { %>

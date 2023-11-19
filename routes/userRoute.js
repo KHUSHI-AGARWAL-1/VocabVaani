@@ -2,7 +2,7 @@ const { authJwt } = require("../middlewares");
 const express =  require('express');
 const controller = require("../controllers/userController");
 const Role = require("../models/roleModel");
-
+const User = require("../models/userModel");
 const router = express.Router();
 
 
@@ -27,20 +27,54 @@ router.use(function (req, res, next) {
     controller.adminBoard
   );
 
-  router.delete('/delete-account/:id' , async(req,res)=>{
-    let {id} = req.params;
+  router.post('/delete-account', async (req, res) => {
+    const confirmation = req.body.confirmation;
   
-    let {user} = await User.findById(id)
-    for(let idd of user.roles){
-      await Role.findByIdAndDelete(idd);
+    if (confirmation === 'yes') {
+      try {
+        // Assuming you have a user ID stored in the session or request
+        const userId = req.session.user.id; // Adjust this based on your authentication setup
   
+        console.log('User ID from session:', userId);
+        if (!userId) {
+          return res.status(400).send('User ID is not available');
+        }
+        // Find the user by ID
+        const user = await User.findById(userId);
+        
+  
+        console.log('User:', user);
+        if (!user) {
+          return res.status(404).send('User not found');
+        }
+  
+        // Delete the user and their associated role
+        await User.deleteOne({ _id: userId });
+  
+        // You might need to delete the associated role from your database here
+        // For example, if the role is stored in another collection
+        await Role.findByIdAndDelete(user.role);
+  // Clear the session
+  req.session.destroy();
+
+  // Optionally, clear the token cookie
+  res.clearCookie('token');
+
+        // Redirect or render a success page
+        res.render('delete');
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      }
+    } else {
+      // If the user clicks "Cancel," redirect them to the main page
+      res.redirect('/main');
     }
-    await User.findByIdAndDelete(id);
-    res.redirect('/home');
-  })
+  });
   
+  module.exports = router;
   
-module.exports = router;
+
 
 
 

@@ -95,9 +95,19 @@ exports.signin = async (req, res) => {
 
 exports.signout = async (req, res) => {
   try {
-    req.session = null;
-    return res.status(200).send({ message: "You've been signed out!" });
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error destroying session" });
+      }
+      
+      // Optionally, you can clear the token cookie
+      res.clearCookie('token');
+
+      return res.status(200).send({ message: "You've been signed out!" });
+    });
   } catch (err) {
-    this.next(err);
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

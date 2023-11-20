@@ -37,7 +37,8 @@ exports.signup = async (req, res) => {
 
     // Save the user with roles assigned
     await user.save();
-res.redirect('/main')
+    res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${roles.join(',')}`);
+
 // return;
     // res.status(200).json({ message: "User was registered successfully!" });
   } catch (error) {
@@ -49,7 +50,7 @@ console.log(error)
 
 exports.signin = async (req, res) => {
   try {
-    console.log("Request Body:", req.body);
+    console.log("Request Body:", req.body.username);
     
     const user = await User.findOne({
       username: req.body.username,
@@ -66,7 +67,7 @@ exports.signin = async (req, res) => {
     if (!passwordIsValid) {
       return res.status(401).json({ message: "Invalid Password!" });
     }
-    const token = jwt.sign({ id: user.id }, config.secret, {
+    const token = jwt.sign({ id: user._id }, config.secret, {
             algorithm: 'HS256',
             allowInsecureKeySizes: true,
             expiresIn: 86400, // 24 hours
@@ -76,7 +77,7 @@ exports.signin = async (req, res) => {
           res.cookie('token', token, { httpOnly: true });
            // Store user information in the session
     req.session.user = {
-      id: user._id,
+      _id: user._id,
       username: user.username,
       email: user.email,
       roles: authorities,

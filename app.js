@@ -11,7 +11,10 @@ const db = require("./models");
 const authroute = require("./routes/authRoute");
 const userroute = require("./routes/userRoute");
 const Role = db.role;
-  
+const flash = require("connect-flash");
+const mongoose=require('mongoose')
+const ObjectId = mongoose.Types.ObjectId;
+const bcrypt= require('bcrypt')
 let corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -30,7 +33,14 @@ app.use(session({
 }));
 app.use(authroute)
 app.use(userroute)
+app.use(flash());
 
+// Middleware to make flash messages available to all views
+app.use((req, res, next) => {
+  res.locals.successMessage = req.flash("successMessage");
+  res.locals.errorMessage = req.flash("errorMessage");
+  next();
+});
 
 db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)
   .then(() => {
@@ -61,41 +71,23 @@ app.get('/main', (req, res) => {
 app.get("/delete/", (req, res) => {
   res.render('confirmDelete')
 });
-
-
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-
-  async function initial() {
-    try {
-      const count = await Role.estimatedDocumentCount();
-  
-      if (count === 0) {
-        await Role.create([
-          { name: "user" },
-          { name: "moderator" },
-          { name: "admin" }
-        ]);
-  
-        console.log("Roles added to the collection");
-      }
-    } catch (err) {
-      console.error("Error when estimating document count or adding roles", err);
-    }
- }
- 
-
-
-
-
+app.get('/viewprofile',(req,res)=>{
+  const username = req.query.username;
+  const email = req.query.email;
+  const role = req.query.roles;
+  res.render('viewProfile', { username,email,role });
+})
+app.get('/faqs',(req,res)=>{
+  res.render('FAQs')
+})
 app.post('/search', async (req, res) => {
   const word = req.body.word;
   console.log('Req Query:', req.query);
   console.log('Word:', word); 
+  const user = req.session.user;
+
+  // Assuming you have a username property in your user object
+  const username = user ? user.username : null;
 
   const searchHistory = req.session.searchHistory || [];
   
@@ -165,7 +157,7 @@ app.post('/search', async (req, res) => {
 
     const rhymeResult = await rhymeResponse.json();
 
-    res.render('main2', { word, dictionaryResult,truedefinition,thesaurusResult,rhymeResult,searchHistory});
+    res.render('main2', { word, dictionaryResult,truedefinition,thesaurusResult,rhymeResult,searchHistory,username: username});
   } catch (error) {
     console.error('Error:', error);
     res.render('main', { error: 'An error occurred' });
@@ -178,3 +170,123 @@ app.get('/user/history', (req, res) => {
 
   res.render('searchHistory', { searchHistory });
 });
+
+app.get('/settings',(req,res)=>{
+  res.render('settings')
+})
+
+
+
+// Route to handle changing username
+app.post("/settings/change-username", async (req, res) => {
+  const { newUsername } = req.body;
+
+  try {
+    // Get the user ID from the session
+const userId = req.session.user ? req.session.user._id :null;
+
+// Check if userId is a valid ObjectId
+if (!ObjectId.isValid(userId)) {
+  console.error('Invalid user ID:', userId);
+  req.flash('errorMessage', 'Invalid user ID');
+  return res.redirect('/settings');
+}
+    console.log('User ID:', userId);
+    console.log('Session User:', req.session.user);
+    // Update the username in the database (replace 'userId' with the actual user ID)
+    const result = await User.updateOne({ _id: new ObjectId(userId)}, { username: newUsername });
+    console.log('Filter:', { _id: new ObjectId(userId) });
+    console.log('Update:', { username: newUsername });
+    console.log('Update Result:', result);
+    // Flash success message
+    req.flash("successMessage", "Username changed successfully");
+
+    // Redirect back to the settings page
+    res.redirect("/settings");
+  }  catch (error) {
+    console.error('Error changing username:', error);
+    req.flash('errorMessage', 'An error occurred while changing the username');
+    res.redirect('/settings');
+  }
+});
+// Route to handle changing email
+app.post("/settings/change-email", async (req, res) => {
+  const { newEmail } = req.body;
+
+  try {
+    // Update the email in the database (replace 'userId' with the actual user ID)
+      // Get the user ID from the session
+const userId = req.session.user ? req.session.user._id : null;
+
+// Check if userId is a valid ObjectId
+if (!ObjectId.isValid(userId)) {
+  console.error('Invalid user ID:', userId);
+  req.flash('errorMessage', 'Invalid user ID');
+  return res.redirect('/settings');
+}
+    await User.updateOne({_id: new ObjectId(userId) }, { email: newEmail });
+
+  // Flash success message
+  req.flash("successMessage", "Email changed successfully");
+
+  // Redirect back to the settings page
+  res.redirect("/settings");
+  } catch (error) {
+    console.error("Error changing email:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to handle changing password
+app.post("/settings/change-password", async (req, res) => {
+  const { newPassword } = req.body;
+
+  try {
+     // Get the user ID from the session
+const userId = req.session.user ? req.session.user._id : null;
+
+// Check if userId is a valid ObjectId
+if (!ObjectId.isValid(userId)) {
+  console.error('Invalid user ID:', userId);
+  req.flash('errorMessage', 'Invalid user ID');
+  return res.redirect('/settings');
+}
+const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Update the password in the database (replace 'userId' with the actual user ID)
+    await User.updateOne({ _id: new ObjectId(userId)}, { password: hashedPassword });
+
+   // Flash success message
+   req.flash("successMessage", "Password changed successfully");
+
+   // Redirect back to the settings page
+   res.redirect("/settings");
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+
+  async function initial() {
+    try {
+      const count = await Role.estimatedDocumentCount();
+  
+      if (count === 0) {
+        await Role.create([
+          { name: "user" },
+          { name: "moderator" },
+          { name: "admin" }
+        ]);
+  
+        console.log("Roles added to the collection");
+      }
+    } catch (err) {
+      console.error("Error when estimating document count or adding roles", err);
+    }
+ }
+ 

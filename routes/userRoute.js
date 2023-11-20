@@ -33,7 +33,7 @@ router.use(function (req, res, next) {
     if (confirmation === 'yes') {
       try {
         // Assuming you have a user ID stored in the session or request
-        const userId = req.session.user.id; // Adjust this based on your authentication setup
+        const userId = req.session.user._id; // Adjust this based on your authentication setup
   
         console.log('User ID from session:', userId);
         if (!userId) {
@@ -53,7 +53,7 @@ router.use(function (req, res, next) {
   
         // You might need to delete the associated role from your database here
         // For example, if the role is stored in another collection
-        await Role.findByIdAndDelete(user.role);
+        await Role.findByIdAndDelete(user.roles);
   // Clear the session
   req.session.destroy();
 

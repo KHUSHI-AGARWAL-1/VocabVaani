@@ -1,0 +1,50 @@
+<!-- settings.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <!-- Add your stylesheets and other head elements here -->
+</head>
+<body>
+
+  <h1>User Settings</h1>
+  <% if (successMessage) { %>
+    <div class="success-message">
+      <%= successMessage %>
+    </div>
+  <% } %>
+
+  <% if (errorMessage) { %>
+    <div class="error-message">
+      <%= errorMessage %>
+    </div>
+  <% } %>
+  <!-- Change Username Form -->
+  <form action="/settings/change-username" method="post">
+    <label for="newUsername">New Username:</label>
+    <input type="text" id="newUsername" name="newUsername" required>
+    <button type="submit">Change Username</button>
+  </form>
+
+  <!-- Change Email Form -->
+  <form action="/settings/change-email" method="post">
+    <label for="newEmail">New Email:</label>
+    <input type="email" id="newEmail" name="newEmail" required>
+    <button type="submit">Change Email</button>
+  </form>
+
+  <!-- Change Password Form -->
+  <form action="/settings/change-password" method="post">
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+    <button type="submit">Change Password</button>
+  </form>
+
+  <!-- Add other settings forms or information as needed -->
+
+  <!-- Add your scripts and other body elements here -->
+</body>
+</html>

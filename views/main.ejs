@@ -8,13 +8,10 @@
 <form id="wordForm" action="/search" method="post">
   <label for="word">Search Word:</label>
   <input type="text" name="word" id="word" placeholder="Enter a Word" required>
-      <!-- Add a language dropdown -->
-      <label for="language">Select Language:</label>
-      <select name="language" id="language">
-        <option value="en">English</option>
-        <option value="es">Spanish</option>
-        <!-- Add more language options as needed -->
-      </select>
+     
   <button type="submit">Search</button>
 </form>
-<a href="/user/history">View Search History</a>
+<a href="/user/history">View History</a>
+<a href="/viewprofile?username=<%= username %>">View profile</a>
+<a href="/settings">Settings</a>
+<a href="/faqs">FAQs</a>

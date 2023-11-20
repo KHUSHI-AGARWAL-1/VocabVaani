@@ -71,12 +71,16 @@ app.get('/main', (req, res) => {
 app.get("/delete/", (req, res) => {
   res.render('confirmDelete')
 });
-app.get('/viewprofile',(req,res)=>{
-  const username = req.query.username;
-  const email = req.query.email;
-  const role = req.query.roles;
-  res.render('viewProfile', { username,email,role });
-})
+// app.get('/viewprofile',(req,res)=>{
+//   const username = req.query.username;
+//   const email = req.query.email;
+//   const role = req.query.roles;
+//   res.render('viewProfile', { username,email,role });
+// })
+app.get('/viewprofile', (req, res) => {
+  const user = req.session.user;
+  res.render('viewProfile', { user });
+});
 app.get('/faqs',(req,res)=>{
   res.render('FAQs')
 })
@@ -198,6 +202,8 @@ if (!ObjectId.isValid(userId)) {
     console.log('Filter:', { _id: new ObjectId(userId) });
     console.log('Update:', { username: newUsername });
     console.log('Update Result:', result);
+    // Update the username in the session
+    req.session.user.username = newUsername;
     // Flash success message
     req.flash("successMessage", "Username changed successfully");
 
@@ -206,7 +212,10 @@ if (!ObjectId.isValid(userId)) {
   }  catch (error) {
     console.error('Error changing username:', error);
     req.flash('errorMessage', 'An error occurred while changing the username');
-    res.redirect('/settings');
+    // res.redirect('/settings');
+    // Redirect back to the settings page
+res.redirect(`/viewprofile?username=${newUsername}`);
+
   }
 });
 // Route to handle changing email

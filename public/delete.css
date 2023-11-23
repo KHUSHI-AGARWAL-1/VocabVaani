@@ -1,0 +1,19 @@
+
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.message-box {
+    background-color: #a72828;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.button{
+    margin-top: 20px;
+}

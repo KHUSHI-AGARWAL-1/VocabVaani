@@ -1,6 +1,26 @@
-<h1>Are you sure you want to delete your account?</h1>
-<form action="/delete-account" method="POST">
-  <a href="/main">Cancel</a>
-  <button type="submit" name="confirmation" value="yes">Yes</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Ask</title>
+   <link rel="stylesheet" href="./delete.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Confirmation Message</h1>
+        <p class="lead">Are you sure you want to proceed?</p>
+        <hr class="my-4">
+        <form action="/delete-account" method="POST">
+          <a  class="btn btn-danger" href="/main">Cancel</a>
+          <button  class="btn btn-success mr-3" type="submit" name="confirmation" value="yes">Yes</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

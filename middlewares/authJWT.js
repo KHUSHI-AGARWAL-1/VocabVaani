@@ -19,7 +19,13 @@ const verifyToken = async (req, res, next) => {
     // Verify the token asynchronously using Promises
     const decoded = await verifyAsync(token, config.secret);
 
-    req.userId = decoded.id;
+    req.session.user = {
+      _id: decoded.id,
+      username: decoded.username,
+      email: decoded.email,
+      password: decoded.password,
+      roles: decoded.roles
+    };
     next();
   } catch (error) {
     return res.status(401).send({ message: "Unauthorized!" });

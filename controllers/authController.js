@@ -1,7 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
-const Role = db.role;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
@@ -18,31 +17,20 @@ exports.signup = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
+      roles: req.body.role
     });
+
     await user.save();
-    let roles;
-    if (req.body.roles) {
-      roles = await Role.find({
-        name: { $in: req.body.roles },
-      });
-    } 
-    else {
-      // Default role if not specified
-      const defaultRole = await Role.findOne({ name: "user" });
-      roles = [defaultRole];
-    }
-
-    // Assign roles to the user
-    user.roles = roles.map((role) => role._id);
-
-    // Save the user with roles assigned
-    await user.save();
-    res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${roles.join(',')}`);
-
-// return;
+    if(user.roles=='USER')
+    res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities}`);
+    // return;
+  else{
+    res.redirect(`/mainA?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities}`);
+  }
+    // return;
     // res.status(200).json({ message: "User was registered successfully!" });
   } catch (error) {
-console.log(error)
+    console.log(error)
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -51,10 +39,10 @@ console.log(error)
 exports.signin = async (req, res) => {
   try {
     console.log("Request Body:", req.body.username);
-    
+
     const user = await User.findOne({
       username: req.body.username,
-    }).populate("roles", "-__v");
+    })
 
     console.log("User object:", user);
 
@@ -68,47 +56,39 @@ exports.signin = async (req, res) => {
       return res.status(401).json({ message: "Invalid Password!" });
     }
     const token = jwt.sign({ id: user._id }, config.secret, {
-            algorithm: 'HS256',
-            allowInsecureKeySizes: true,
-            expiresIn: 86400, // 24 hours
-          });
-      
-          const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
-          res.cookie('token', token, { httpOnly: true });
-           // Store user information in the session
+      algorithm: 'HS256',
+      allowInsecureKeySizes: true,
+      expiresIn: 86400, // 24 hours
+    });
+
+    const authorities = user.roles.toUpperCase();
+    res.cookie('token', token, { httpOnly: true });
+    // Store user information in the session
     req.session.user = {
       _id: user._id,
       username: user.username,
       email: user.email,
       roles: authorities,
     };
-          req.session.token = token;
-      
-         // In the signup route handler
-         res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities.join(',')}`);
-         return;
+    req.session.token = token;
+if(user.roles=='USER')
+    res.redirect(`/main?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities}`);
+  
+    // return;
+  else{
+    res.redirect(`/mainA?id=${user._id}&username=${user.username}&email=${user.email}&roles=${authorities}`);
   }
-   catch (error) {
+  }
+  catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 exports.signout = async (req, res) => {
-  try {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Error destroying session" });
-      }
-      
-      // Optionally, you can clear the token cookie
-      res.clearCookie('token');
-
-      return res.status(200).send({ message: "You've been signed out!" });
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
-  }
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+    }
+    res.redirect('/'); // Redirect to the login page or any public page
+  });
 };

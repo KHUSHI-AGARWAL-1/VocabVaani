@@ -1,30 +1,48 @@
 body {
-    /* background-image: url("./bg.png"); */
-    /* background: linear-gradient(to right, rgb(164, 225, 140), #012519); */
-    color: #fff;
-    padding: 50px;
-    text-align: center;
+  /* background: url("lib2.jpeg") no-repeat; 
+  background-image: linear-gradient(to right, rgb(10,10,10,0.575), rgba(0,0,0,0.89));  */
+   background-image:linear-gradient(to right, rgba(0, 0, 0, 0.575), rgba(0, 0, 0, 0.89)), 
+  url("lib2.jpeg"); 
+ 
+  background-size:  cover; 
+  background-position: center;
+  color: #fff;
+  padding: 0px;
+  text-align: center;
+  margin: 0;
+  
 
 }
+.no-scrollbars {
+  /* Keeps both the horizontal and vertical 
+     scrollbars hidden */
+  overflow: hidden;
+}
+/* .container{
+  background-color: red;
+  margin-top: 0px;
+  width: 100%;
+  height: 100vh;
+} */
 
 
 .message {
-    text-align: center;
-    color: rgb(112, 10, 106);
-    font-size: 5rem;
-    transition: 2s;
-    text-shadow: 0 1px 0 #ccc,
-    0 2px 0 #c9c9c9,
-    0 3px 0 #bbb,
-    0 4px 0 #b9b9b9,
-    0 5px 0 #aaa,
-    0 6px 1px rgba(0,0,0,.1),
-    0 0 5px rgba(0,0,0,.1),
-    0 1px 3px rgba(0,0,0,.3),
-    0 3px 5px rgba(0,0,0,.2),
-    0 5px 10px rgba(0,0,0,.25),
-    0 10px 10px rgba(0,0,0,.2),
-    0 20px 20px rgba(0,0,0,.15);
+  text-align: center;
+  color: rgb(249, 247, 249);
+  font-size: 5rem;
+  transition: 2s;
+  text-shadow: 0 1px 0 #ccc,
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
 
 }
 
@@ -33,19 +51,22 @@ transform: rotateX(160deg);
 }
 
 .image {
+.image {
   max-width: 100%;
-  height: 300px;
-  margin-bottom: 10px;
-  
+  height: auto; /* Make the height auto to maintain the aspect ratio */
+  margin: 0 auto; /* Center the image horizontally */
+  display: block; /* Make sure it's treated as a block element */
+}
 }
 
 .btn {
-justify-content: center;
+display: flex;
+justify-content: space-evenly;
 margin-top: 10px;
 }
 
 .custom-btn {
-width: 200px;
+width: 300px;
 height: 50px;
 font-size: 1.2rem;
 margin-bottom: 15px;

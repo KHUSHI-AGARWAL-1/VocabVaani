@@ -1,44 +1,9 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="-1" />
-  <title>Document</title>
-</head>
-<body>
-  <h1>main page</h1>
-<h1>Welcome </h1>
-<a href="api/auth/signout">signout</a>
-
-<a href="/delete">Delete account</a>
-
-
-<form id="wordForm" action="/search" method="post">
-  <label for="word">Search Word:</label>
-  <input type="text" name="word" id="word" placeholder="Enter a Word" required>
-     
-  <button type="submit">Search</button>
-</form>
-<a href="/user/history">View History</a>
-<a href="/viewprofile?username=<%= username %>">View profile</a>
-<a href="/settings">Settings</a>
-<a href="/faqs">FAQs</a>
-<script>
-  if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-  }
-</script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" href="./main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,6 +31,7 @@
                 <a href="/faqs">FAQs</a>
                 <a href="/user/history">History</a>
                 <a href="/settings">Settings</a>
+                <a href="/viewusers">View Users</a>
                 <a href="api/auth/signout">Logout</a>            
                 <a href="/delete">Delete Account</a>
             </div>

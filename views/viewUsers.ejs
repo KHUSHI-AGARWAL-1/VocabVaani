@@ -1,0 +1,15 @@
+<h1>Users list</h1>
+<ul>
+    
+    <% list.forEach(user => { %>
+        
+             <li><%= user.username %></li>
+             <li><%= user.email %></li>
+             <li><%= user.roles %></li>
+             <form action="/admin/deleteUser/<%= user._id %>" method="post" style="display: inline;">
+                <button type="submit">Delete</button>
+              </form>
+     
+      <!-- Display other user information as needed -->
+    <% }); %>
+  </ul>

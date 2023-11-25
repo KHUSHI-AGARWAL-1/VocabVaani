@@ -2,49 +2,142 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
-  <!-- Add your stylesheets and other head elements here -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/nav.css">
+  <link rel="stylesheet" href="/footer.css">
+  <link rel="stylesheet" href="settings.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@1,700&family=PT+Serif&family=Tilt+Prism&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4f213e973b.js" crossorigin="anonymous"></script>
 </head>
-<body>
 
-  <h1>User Settings</h1>
+<body>
+  <nav>
+    <div class="img">
+      <img src="/logo2k.png">
+    </div>
+    <div class="name">VocabVaani</div>
+    <div class="right">
+      <a href="#">Home</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <div class="dropdown">
+        <span class="material-symbols-outlined" id="dropdown-btn">
+          menu
+        </span>
+        <div class="dropdown-content">
+          <a href="#>">My Profile</a>
+          <a href="/faqs">FAQs</a>
+          <a href="/user/history">History</a>
+          <a href="/settings">Settings</a>
+          <a href="test/test-signout">Logout</a>
+          <a href="/delete">Delete Account</a>
+        </div>
+
+      </div>
+
+    </div>
+  </nav>
   <% if (successMessage) { %>
     <div class="success-message">
       <%= successMessage %>
     </div>
-  <% } %>
+    <% } %>
 
-  <% if (errorMessage) { %>
-    <div class="error-message">
-      <%= errorMessage %>
-    </div>
-  <% } %>
-  <!-- Change Username Form -->
-  <form action="/settings/change-username" method="post">
-    <label for="newUsername">New Username:</label>
-    <input type="text" id="newUsername" name="newUsername" required>
-    <button type="submit">Change Username</button>
-  </form>
+      <% if (errorMessage) { %>
+        <div class="error-message">
+          <%= errorMessage %>
+        </div>
+        <% } %>
+  
+          <h1 class="use">User Settings</h1>
+          <div class="outer">
 
-  <!-- Change Email Form -->
-  <form action="/settings/change-email" method="post">
-    <label for="newEmail">New Email:</label>
-    <input type="email" id="newEmail" name="newEmail" required>
-    <button type="submit">Change Email</button>
-  </form>
+            <form action="/settings/change-username" method="post">
+              <label>
+                Change Username:
+                <input type="username" name="username" placeholder="Enter your username" required>
+                <button type="submit" class="edit-icon">&#9998;</button>
+              </label>
+            </form>
+            <form action="/settings/change-email" method="post">
+              <label>
+                Change Email:
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit" class="edit-icon">&#9998;</button>
+              </label>
+            </form>
+            <form action="/settings/change-password" method="post">
+              <label>
+                Change Password:
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <button type="submit" class="edit-icon">&#9998;</button>
+              </label>
+            </form>
+          </div>
 
-  <!-- Change Password Form -->
-  <form action="/settings/change-password" method="post">
-    <label for="newPassword">New Password:</label>
-    <input type="password" id="newPassword" name="newPassword" required>
-    <button type="submit">Change Password</button>
-  </form>
 
-  <!-- Add other settings forms or information as needed -->
 
-  <!-- Add your scripts and other body elements here -->
+
+          </div>
+
+          </form>
+
+
+
+          <div id="footer">
+            <div id="social" class="box">
+              <h1 class="headi">VocabVaani</h1>
+              <p class="inner"> Dictionary.com</p>
+              <p class="inner"> Thesaurus.com</p>
+              <p class="inner"> Rhyme.com</p>
+            </div>
+            <div id="contact" class="box">
+              <h1 class="headi">Contact Us</h1>
+              <div class="mid">
+                <p>
+                  <a href="" class="connect"> khushi.agrawal_cs21@gla.ac.in</a><br>
+                  70176XXXXX<br>
+                  Mathura,Uttar Pradesh
+                </p>
+                <p>
+                  <a href="" class="connect"> kashish.bansal_cs21@gla.ac.in</a><br>
+                  9045XXXXX<br>
+                  Mathura,Uttar Pradesh
+                </p>
+              </div>
+
+            </div>
+            <div class="follow">
+              <h1 class="headi">Follow Us</h1>
+              <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+              </div>
+              <p class="inner">Get a Word of the Day</p>
+              <div>
+                <input type="email" placeholder="Enter your email">
+                <button type="submit">Sign Up</button>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+
 </body>
+
 </html>

@@ -1,0 +1,38 @@
+.min{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+section{
+    color: #444;
+    font-size: 2rem;
+    text-align: center;
+    padding: 2px;
+}
+
+.user-list {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    align-items: center;
+}
+hr{
+    color: #ccc;
+}
+.delete-btn {
+    background-color: #413f3f;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

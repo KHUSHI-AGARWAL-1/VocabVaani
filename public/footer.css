@@ -1,0 +1,107 @@
+#footer {
+    margin-top: 195px;
+    margin-bottom: 0px;
+    /* position: fixed; */
+    width: 100vw;
+    height: 40vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: #444;
+    overflow: hidden;
+}
+
+.box {
+    height: 50vh;
+    width: 28vw;
+    margin-top: 30px;
+    color: #8a8686;
+    font-size: 1rem;
+}
+
+.box h2 {
+    margin-left: 90px;
+    margin-top: 85px;
+
+}
+
+
+.headi {
+    margin-left: 80px;
+    font-size: 1.8rem;
+    color: #f2eaea;
+}
+
+.inner{
+    font-size: 1.2rem;
+    margin-left: 80px;
+}
+.mid{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+
+#contact p {
+
+    margin-left: 70px;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #8a8686;
+    margin-bottom: 20px;
+   
+}
+
+.connect {
+ 
+    font-size: 1rem;
+    text-decoration: none;
+    color: #8a8686;
+}
+
+.connect:hover {
+    color: rgb(255, 255, 255);
+}
+
+#third{
+    margin-top: 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.follow {
+    margin-right: 70px;
+    color: #8a8686;
+    margin-top: 10px;
+    padding: 20px;
+}
+.social-icons{
+    margin-left: 80px;
+}
+
+.social-icon {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+input {
+    padding: 10px;
+    margin-left: 80px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #050505;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+}

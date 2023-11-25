@@ -6,8 +6,8 @@ const User = mongoose.model(
     username: String,
     email: String,
     password: String,
-    roles: String
-    
+    roles: String,
+    searchHistory: [String]
   })
 );
 

@@ -1,0 +1,35 @@
+.in {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    font-size: 2rem;
+    color: #444;
+    text-align: center;
+    margin: 10px auto;
+
+    
+}
+
+
+section {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+   
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+  list-style: disc;
+    padding: 10px;
+}

@@ -22,9 +22,9 @@ router.get("/api/auth/signin", (req, res) => {
   // Render a signin form
   res.render('main');
 });
-router.get("/api/auth/signout", (req, res) => {
-  res.redirect('/');
-});
+// router.get("/api/auth/signout", (req, res) => {
+//   res.redirect('/');
+// });
 
 
 router.post("/api/auth/signin", controller.signin);
@@ -39,6 +39,6 @@ router.use((req, res, next) => {
   res.header('Pragma', 'no-cache');
   next();
 });
-router.post("/api/auth/signout", controller.signout);
+// router.post("/api/auth/signout", controller.signout);
 
 module.exports = router;

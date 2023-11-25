@@ -1,22 +1,18 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <link rel="stylesheet" href="/usera.css">
+    <link rel="stylesheet" href="/userm.css">
+    <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="/nav.css">
-    <link rel="stylesheet" href="/footer.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@1,700&family=PT+Serif&family=Tilt+Prism&display=swap"
-        rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@1,700&family=PT+Serif&family=Tilt+Prism&display=swap" rel="stylesheet">
 
 </head>
-
 <body>
     <nav>
         <div class="img">
@@ -45,33 +41,27 @@
        </div> 
     </nav>
 
-
+ 
     <div class="min">
         <section>
             <h1>User List</h1>
         </section>
 
         <div class="user-list">
-            <div class="user">
-                <% list.forEach(user=> { %>
-
-
-
-                    <h3>User: <%= user.username %>
-                    </h3>
-                    <p>Email: <%= user.email %>
-                    </p>
-                    <p>Role: <%= user.roles %>
-                    </p>  <form action="/admin/deleteUser/<%= user._id %>" method="post" style="display: inline;">
-                        <button class="delete-btn" type="submit">Delete</button>
-                      </form>
-                    <hr>
-                    <% }); %>
-            </div>
+          <div class="user">
+            <% list.forEach(user => { %>
+    
+              
+      
+            <h3>User: <%= user.username %></h3>
+            <p>Email: <%= user.email %></p> 
+            <p>Role: <%= user.roles %></p>
+            
+            <hr>
+            <% }); %>
+        </div>
         </div>
     </div>
-
-
 
     <div id="footer">
         <div id="social"  class="box">
@@ -112,6 +102,8 @@
         
         
         </div>
+
+
 </body>
 
 </html>

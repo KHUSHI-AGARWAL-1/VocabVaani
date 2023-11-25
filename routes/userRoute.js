@@ -59,6 +59,11 @@ router.get('/mainA', (req, res) => {
   const userId = req.query.userId;
   res.render('mainA', { username, userId });
 });
+router.get('/mainM', (req, res) => {
+  const username = req.query.username;
+  const userId = req.query.userId;
+  res.render('mainM', { username, userId });
+});
 router.get("/delete/", (req, res) => {
   res.render('confirmDelete')
 });
@@ -105,8 +110,12 @@ router.post('/search', async (req, res) => {
   console.log('Req Query:', req.query);
   console.log('Word:', word);
   const user = req.session.user;
+  
   const username = user ? user.username : null;
-const searchHistory = req.session.searchHistory || [];
+  // Retrieve user's search history from the database
+  const userWithHistory = await User.findOne({ username: user.username });
+  const searchHistory = userWithHistory ? userWithHistory.searchHistory : [];
+
   // Add the current search word to the history
   searchHistory.push(word);
 
@@ -114,7 +123,7 @@ const searchHistory = req.session.searchHistory || [];
   if (searchHistory.length > 5) {
     searchHistory.shift(); // Remove the oldest entry
   }
-  req.session.searchHistory = searchHistory;
+  await User.updateOne({ username: user.username }, { $set: { searchHistory } })
 
   const apiKey = 'Lt6dQ53TeMN9iCe3R2166A==OvKwqJTX0kcjbVaL';
   const dictionaryUrl = 'https://api.api-ninjas.com/v1/dictionary?word=' + word;
@@ -168,17 +177,29 @@ const searchHistory = req.session.searchHistory || [];
 
     const rhymeResult = await rhymeResponse.json();
 
+
+    
     res.render('main2', { word, dictionaryResult, truedefinition, thesaurusResult, rhymeResult, searchHistory, username: username });
   } catch (error) {
     console.error('Error:', error);
     res.render('main', { error: 'An error occurred' });
   }
 });
-router.get('/user/history', (req, res) => {
-  const searchHistory = req.session.searchHistory || [];
+router.get('/user/history', async (req, res) => {
+  try {
+    // Retrieve the user's search history from the database
+    const user = req.session.user;
+    const userWithHistory = await User.findOne({ username: user.username });
+    const searchHistory = userWithHistory ? userWithHistory.searchHistory : [];
 
-  res.render('searchHistory', { searchHistory });
+    // Render the searchHistory.ejs template with the searchHistory data
+    res.render('searchHistory', { searchHistory });
+  } catch (error) {
+    console.error('Error:', error);
+    res.render('searchHistory', { error: 'An error occurred' });
+  }
 });
+
 router.get('/settings', (req, res) => {
   res.render('settings')
 })
@@ -280,7 +301,7 @@ router.post("/settings/change-password", async (req, res) => {
 });
 
 //Admin routes
-router.get('/viewusers', async (req, res) => {
+router.get('/admin/viewusers', async (req, res) => {
   try {
     const userList = await User.find(); // Execute the query to get the list of users
     console.log(userList);
@@ -297,13 +318,25 @@ router.post('/admin/deleteUser/:userId', async (req, res) => {
   try {
     // Delete the user by ID
     await User.findByIdAndDelete(userId);
-    res.redirect('/viewusers'); // Redirect back to the user list after deletion
+    res.redirect('/admin/viewusers'); // Redirect back to the user list after deletion
   } catch (error) {
     // Handle error appropriately
     console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
+//moderator routes 
+router.get('/mod/viewusers', async (req, res) => {
+  try {
+    const userList = await User.find(); // Execute the query to get the list of users
+    console.log(userList);
+    res.render('viewUsersM', { list: userList }); // Pass the users data to the view
+  } catch (error) {
+    // Handle error appropriately
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});  
 module.exports = router;
 
 

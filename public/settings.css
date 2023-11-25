@@ -1,0 +1,67 @@
+.use{
+    text-align: center;
+    color: #555353;
+    font-size: 2rem;
+}
+#footer{
+    margin-top: 50px;
+}
+.outer {
+  width: 600px;
+  height: 270px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+}
+form {
+  margin: 0 auto;
+  width: 500px;
+  height: 50px;
+  padding: 20px;
+
+  background-color: rgba(68, 66, 66, 0.84);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ 
+ 
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+label {
+  display: flex;
+  margin-bottom: 30px;
+  color: white;
+}
+
+
+input {
+  flex: 1;
+  padding: 8px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  border: 1px solid #555353;
+  border-radius: 3px;
+  margin-top: 5px;
+}
+
+.edit-icon {
+  margin-top: 5px; 
+  background-color: #555353;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  background-color: #333;
+}

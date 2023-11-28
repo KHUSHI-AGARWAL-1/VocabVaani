@@ -337,6 +337,9 @@ router.get('/mod/viewusers', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });  
+router.get('/abt', (req, res) => {
+  res.render('abt');
+});
 module.exports = router;
 
 

@@ -1,0 +1,52 @@
+.main{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.hed{
+    font-size: 3rem;
+    padding-right: 10px;
+    color: #444;
+}
+.word-section {
+    width: 100px;
+    padding-left: 600px;
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.definition-section, .antonyms-section, .synonyms-section, .rhymings-section {
+    background-color:rgb(223, 225, 223);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 8px;
+}

@@ -1,1 +1,144 @@
-<h1>Frequently Asked Questions</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/faq.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/nav.css">
+<link rel="stylesheet" href="/footer.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@1,700&family=PT+Serif&family=Tilt+Prism&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/4f213e973b.js" crossorigin="anonymous"></script>  
+
+    <script>
+      
+        document.addEventListener("DOMContentLoaded", function () {
+            const questions = document.querySelectorAll('.question');
+
+            questions.forEach(question => {
+                question.addEventListener('click', function () {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="img">
+            <img src="/logo2k.png">
+        </div>
+        <div class="name">VocabVaani</div>
+       <div class="right">
+        <a href="#">Home</a>
+        <a href="/abt">About Us</a>
+        <a href="#contact">Contact</a>
+        <div class="dropdown">
+            <span class="material-symbols-outlined" id="dropdown-btn">
+                menu
+            </span>
+            <div class="dropdown-content">
+                <a href="#>">My Profile</a>
+                <a href="/faqs">FAQs</a>
+                <a href="/user/history">History</a>
+                <a href="/settings">Settings</a>
+                <a href="test/test-signout">Logout</a>         
+                <a href="/delete">Delete Account</a>
+            </div>
+            
+        </div>
+       
+       </div> 
+    </nav>
+    <h1 class="faq">Frequently Asked Question</h1>
+
+    <div class="main">
+    <div class="faq-container">
+        <div class="faq-item">
+            <button class="question">How frequently is the database updated with new words and information?</button>
+            <div class="answer">
+                Answer: We regularly update our database to include new words and ensure that the information provided
+                is current and accurate.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="question">Is there a limit to the number of searches I can perform?</button>
+            <div class="answer">
+                Answer: No, you can perform as many searches as you need. Our website is designed to be user-friendly
+                and accessible for multiple queries.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="question">Is the service free to use?</button>
+            <div class="answer">
+                Answer: Yes, our website is free to use. You can access the define, synonyms, antonyms, and rhyming
+                features without any cost.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="question">Do you provide examples of how the word is used in sentences?</button>
+            <div class="answer">
+                Answer: Presently, we focus on definitions, synonyms, antonyms, and rhyming words. Including sentence
+                examples is not a feature we offer at this time.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="question">How accurate are the definitions provided by the e-dictionary?</button>
+            <div class="answer">
+                Answer: The e-dictionary sources its definitions from reputable dictionaries and language resources to ensure accuracy. However, it's always a good practice to cross-reference critical information for academic or professional purposes.
+            </div>
+        </div>
+    </div>
+
+    </div>
+    
+<div id="footer">
+    <div id="social"  class="box">
+        <h1 class="headi">VocabVaani</h1>
+        <p class="inner"> Dictionary.com</p>
+        <p class="inner"> Thesaurus.com</p>
+        <p class="inner"> Rhyme.com</p>
+    </div>
+    <div id="contact"  class="box">
+        <h1 class="headi">Contact Us</h1>
+        <div class="mid"> <p>
+        <a href="" class="connect"> khushi.agrawal_cs21@gla.ac.in</a><br>
+        70176XXXXX<br>
+        Mathura,Uttar Pradesh
+      </p>
+      <p>
+        <a href="" class="connect"> kashish.bansal_cs21@gla.ac.in</a><br>
+        9045XXXXX<br>
+        Mathura,Uttar Pradesh
+     </p>
+    </div>
+     
+    </div>
+    <div class="follow">
+        <h1 class="headi">Follow Us</h1>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+            <p class="inner">Get a Word of the Day</p>
+            <div>
+            <input type="email" placeholder="Enter your email">
+            <button type="submit">Sign Up</button>
+        </div>
+    </div>
+    
+    
+    </div>
+    
+</body>
+</html>
